@@ -2,13 +2,12 @@ def localize(colors,measurements,motions,sensor_right,p_move):
     # initializes p to a uniform distribution over a grid of the same dimensions as colors
     pinit = 1.0 / float(len(colors)) / float(len(colors[0]))
     p = [[pinit for row in range(len(colors[0]))] for col in range(len(colors))]
-
     # >>> Insert your code here <<<
 
     for i in range(len(motions)):
         p = move(p, motions[i], p_move)
         p = sense(p, measurements[i], sensor_right, colors)
-
+        # print(len(p),len(p[0]))
     return p
 
 def sense(p, Z, sensor_right, colors):
@@ -30,9 +29,10 @@ def move(p, U, p_move):
     for i in range(len(p)):
         s = [0] * len(p[0])
         for j in range(len(p[0])):
-            s[j] = p_move * p[ (i - U[0]) % len(p[1]) ][ (j-U[1]) % len(p[0]) ]
+
+            s[j] = p_move * p[ (i - U[0]) % len(p) ][ (j-U[1]) % len(p[0]) ]
             s[j] = s[j] + (1 - p_move)* p[i][j]
-    q.append(s)
+        q.append(s)
     return q
 
 
@@ -55,5 +55,5 @@ colors = [['R','G','G','R','R'],
           ['R','R','R','R','R']]
 measurements = ['G','G','G','G','G']
 motions = [[0,0],[0,1],[1,0],[1,0],[0,1]]
-p = localize(colors,measurements,motions,sensor_right = 0.7, p_move = 0.😎
-show(p) # displays your answer
+p = localize(colors,measurements,motions,sensor_right = 0.7, p_move = 0.8)
+print(p) # displays your answer
