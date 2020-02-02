@@ -44,8 +44,4 @@ int main(){
   for(auto ch: str)
   chars[++j] = ch;
 
-
-
-
-
 }
