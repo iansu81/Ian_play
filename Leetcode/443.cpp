@@ -45,4 +45,7 @@ int main(){
   chars[++j] = ch;
 
 
+
+
+
 }
