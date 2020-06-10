@@ -19,42 +19,18 @@ public:
         ListNode *prev = temp->next;
         while( temp != nullptr)
         {
-            if(temp != nullptr){
-                cout << "In temp: " << temp->val << endl;
-            }
-            // if( prev != nullptr)
-            // {
-            //     cout << "In temp: " << temp->val << endl;
-            // }
-            // if (next != nullptr)
-            // {
-            //     cout << "In temp: " << temp->val << endl;
-            // }
-
             temp->next = nextNode;
-            // cout << "111 " << endl;
             nextNode = temp;
-            // cout << "222 " << endl;
             temp = prev;
-            // cout << "333 " << endl;
-            // if(temp == nullptr){
-            //     cout << "TEMP next is null" << endl;
-            // }
-            // cout << "999" << endl;
+
             if(prev != nullptr)
             {
-                // cout << "555" << endl;
                 prev = prev->next;
-                // cout << "666" << endl;
             }
-            // prev = prev->next;
-            
-            // cout << "444 " << endl;
-        }
-        // cout << "888"<< endl;
         return nextNode;
     }
 };
+
 
 int main() 
 {
