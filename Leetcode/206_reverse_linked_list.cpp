@@ -14,20 +14,20 @@ class Solution
 public:
     ListNode *reverseList(ListNode *head)
     {
-        ListNode *temp = head;
-        ListNode *nextNode = nullptr;
-        ListNode *prev = temp->next;
-        while( temp != nullptr)
+        ListNode *currentNode = head;
+        ListNode *nodeBehind = nullptr;
+        ListNode *nodeAhead = currentNode->next;
+        while( currentNode != nullptr)
         {
-            temp->next = nextNode;
-            nextNode = temp;
-            temp = prev;
+            currentNode->next = nodeBehind;
+            nodeBehind = currentNode;
+            currentNode = nodeAhead;
 
-            if(prev != nullptr)
+            if(nodeAhead != nullptr)
             {
-                prev = prev->next;
+                nodeAhead = nodeAhead->next;
             }
-        return nextNode;
+        return nodeBehind;
     }
 };
 

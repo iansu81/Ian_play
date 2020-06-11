@@ -12,14 +12,40 @@ struct ListNode {
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int m, int n) {
-        ListNode* cur = hear;
-        ListNode* pre = nullptr;
+        ListNode* curNode = head;
+        ListNode *nodeAhead = curNode->next;
+        ListNode* nodeBehind = nullptr;
         ListNode* tail = nullptr;
-        ListNode* con;
-        for(int i = 1; i < n; i++)
+        ListNode* prehead;
+        for(int i = 1; i <= (n+1); i++)
         {
+            // cout << "curr" << i << endl;
+            if( i == m){
+                tail = curNode;
+                // cout << "tail: " << tail->val << endl;
+                prehead = nodeBehind;
+                // cout << "prehead: " << prehead->val << endl;
+            }
+            // else if( i == n )
+            // {
                 
+            // }
+            // cout << "currNode: " << curNode->val << endl;
+            curNode->next = nodeBehind;
+            nodeBehind = curNode;
+            curNode = nodeAhead;
+            nodeAhead = nodeAhead->next;
+
+            if( i == n)
+            {
+                cout << "curNode" << curNode->val << endl;
+                cout << "nodeAhead"
+                prehead->next = nodeBehind;
+                tail->next = curNode;
+            }
+            
         }
+        return head;
     }
 };
 int main() 
@@ -31,14 +57,15 @@ int main()
     ListNode test5(1, &test4);
     ListNode *view = &test5;
 
-    // Solution sol;
-    // view = sol.reverseBetween(view);
-    while( view != nullptr )
+    Solution sol;
+    view = sol.reverseBetween(view, 2, 3);
+    for(int i = 0; i < 5; i++)
     {
         cout << view->val << endl;
         view = view->next;
-
     }
+
+
 
 
 }
