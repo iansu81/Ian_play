@@ -17,32 +17,40 @@ public:
         ListNode* nodeBehind = nullptr;
         ListNode* tail = nullptr;
         ListNode* prehead;
-        for(int i = 1; i <= (n+1); i++)
+        for(int i = 1; i <= n; i++)
         {
             // cout << "curr" << i << endl;
             if( i == m){
                 tail = curNode;
-                // cout << "tail: " << tail->val << endl;
+                cout << "tail: " << tail->val << endl;
                 prehead = nodeBehind;
-                // cout << "prehead: " << prehead->val << endl;
+                cout << "prehead: " << prehead->val << endl;
             }
             // else if( i == n )
             // {
                 
             // }
             // cout << "currNode: " << curNode->val << endl;
+
             curNode->next = nodeBehind;
             nodeBehind = curNode;
             curNode = nodeAhead;
-            nodeAhead = nodeAhead->next;
-
+            if(nodeAhead)
+            {
+                nodeAhead = nodeAhead->next;    
+            }
+            
             if( i == n)
             {
-                cout << "curNode" << curNode->val << endl;
-                cout << "nodeAhead"
+                // cout << "curNode" << curNode->val << endl;
+                // cout << "nodeAhead" << nodeAhead->val << endl;
+                cout << "Tail" << tail->val << endl;
                 prehead->next = nodeBehind;
                 tail->next = curNode;
+    
             }
+
+
             
         }
         return head;
