@@ -12,48 +12,28 @@ struct ListNode {
 class Solution {
 public:
     ListNode* reverseBetween(ListNode* head, int m, int n) {
-        ListNode* curNode = head;
-        ListNode *nodeAhead = curNode->next;
-        ListNode* nodeBehind = nullptr;
-        ListNode* tail = nullptr;
-        ListNode* prehead;
-        for(int i = 1; i <= n; i++)
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode* nodeBehind = &dummy;
+        
+        for(int i = 0; i < m - 1; i++ )
         {
-            // cout << "curr" << i << endl;
-            if( i == m){
-                tail = curNode;
-                cout << "tail: " << tail->val << endl;
-                prehead = nodeBehind;
-                cout << "prehead: " << prehead->val << endl;
-            }
-            // else if( i == n )
-            // {
-                
-            // }
-            // cout << "currNode: " << curNode->val << endl;
-
+            nodeBehind = nodeBehind-> next;
+        }
+        ListNode* curNode = nodeBehind->next;
+        ListNode* preHead = nodeBehind;
+        ListNode* tail = curNode;
+        
+        for(int i = m ; i <= n ; i++)
+        {
+            ListNode* nodeAhead = curNode->next;
             curNode->next = nodeBehind;
             nodeBehind = curNode;
             curNode = nodeAhead;
-            if(nodeAhead)
-            {
-                nodeAhead = nodeAhead->next;    
-            }
-            
-            if( i == n)
-            {
-                // cout << "curNode" << curNode->val << endl;
-                // cout << "nodeAhead" << nodeAhead->val << endl;
-                cout << "Tail" << tail->val << endl;
-                prehead->next = nodeBehind;
-                tail->next = curNode;
-    
-            }
-
-
-            
         }
-        return head;
+        preHead->next = nodeBehind;
+        tail->next = curNode;
+        return dummy.next;
     }
 };
 int main() 
@@ -69,7 +49,7 @@ int main()
     view = sol.reverseBetween(view, 2, 3);
     for(int i = 0; i < 5; i++)
     {
-        cout << view->val << endl;
+        cout << view->val << "->" ;
         view = view->next;
     }
 
