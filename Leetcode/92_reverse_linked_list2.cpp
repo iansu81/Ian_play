@@ -16,14 +16,19 @@ public:
         dummy.next = head;
         ListNode* nodeBehind = &dummy;
         
+        // 把nodeBehind 移到m node前一個
         for(int i = 0; i < m - 1; i++ )
         {
             nodeBehind = nodeBehind-> next;
         }
+        
         ListNode* curNode = nodeBehind->next;
+        // 紀錄m前一個node（之後要接到n node）
         ListNode* preHead = nodeBehind;
+        // 紀錄mnode（之後要接到n node 下一個）
         ListNode* tail = curNode;
         
+        // 開始reverse node 
         for(int i = m ; i <= n ; i++)
         {
             ListNode* nodeAhead = curNode->next;
@@ -31,7 +36,9 @@ public:
             nodeBehind = curNode;
             curNode = nodeAhead;
         }
+        // 把m node 前一個接到n node 
         preHead->next = nodeBehind;
+        // 把m node接到 n node 下一個
         tail->next = curNode;
         return dummy.next;
     }
