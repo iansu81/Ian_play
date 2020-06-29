@@ -4,7 +4,6 @@
 #include <unordered_map>
 
 using namespace std;
-typedef pair<string, int> pi;
 class Solution
 {
     public:
@@ -23,28 +22,39 @@ class Solution
                     data[str] = 1;
                 }
             }
-            auto cmp = [](pi A, pi B){
-                if( A.second == B.second) return A.first > B.first;
+            auto cmp = [](pair<string, int> A, pair<string, int> B) {
+                if( A.second == B.second)
+                    return A.first > B.first;
 
                 return A.second > B.second;
             };
-            priority_queue< pi, vector<string, pi>, decltype(cmp)> ordered_element(cmp);
+            priority_queue<pair<string, int>, vector< pair<string, int>>, decltype(cmp)> ordered_element(cmp);
             for(const auto element: data)
             {
-                ordered_elemnt.push(make_pair(data.first, data.seconf) );
+                ordered_element.push(make_pair(element.first, element.second));
+            }
+            while (ordered_element.size() > 0)
+            {
+                if (ordered_element.size() > k)
+                {
+                    ordered_element.pop();
+                }
+                else{
+                    ans.push_back(ordered_element)
+                }
             }
 
-            return ans;
+                return ans;
                 
 
         }
 
 };
 
+
 int main()
 {
     vector<string> test{"i", "love", "leetcode", "i", "love", "coding"};
     Solution sol;
-
-    
+    sol.topKFrequent(test, 2);
 }
