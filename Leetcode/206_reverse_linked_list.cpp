@@ -28,6 +28,7 @@ public:
                 nodeAhead = nodeAhead->next;
             }
         return nodeBehind;
+        }
     }
 };
 

@@ -1,16 +1,30 @@
+class CacheNode()
+{
+
+    
+}
+
+
 class LFUCache {
-public:
-    LFUCache(int capacity) {
-        
-    }
-    
-    int get(int key) {
-        
-    }
-    
-    void put(int key, int value) {
-        
-    }
+    private:
+        int capacity_;
+        // unordered_map<int, >
+        unord
+
+    public:
+        LFUCache(int capacity) {
+            capacity_ = capacity;
+        }
+
+        int get(int key) {
+            auto
+            
+        }
+
+        void put(int key, int value) {
+            
+        }
+
 };
 
 /**
