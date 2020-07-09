@@ -19,14 +19,26 @@ class Solution
     public:
         ListNode *mergeKLists(vector<ListNode *> &lists)
         {
-            ListNode* dummy;
+            if(lists.size() == 0)
+            {
+                return nullptr;
+            }
+            //建立一個dummy node ,記得要new,不然離開這程式, pointer就消失
+            ListNode* dummy = new ListNode();
+            
+            //建立一個priority_queue, 比較各個node中最大的
             auto comp = [] (ListNode* A, ListNode* B){ return A->val > B->val; };
             priority_queue<ListNode*, vector<ListNode*>, decltype(comp)>
                 q (comp);
+
+            //把各個vector中最大的先push 進去priority_queue
+            //注意這裡可以能會有[[]]的情形,所以在push進去之前,必須要先確定她是不是nullptr
             for(int i = 0; i< lists.size(); ++i)
             {
-                q.push(lists[i]);
+                if(lists[i]) q.push(lists[i]);
             }
+            
+            //每次都先把最小的拿出來然後把最小那個list中下一個push進去priority_queue.
             ListNode* temp = dummy;
             while( !q.empty() )
             {
@@ -35,7 +47,6 @@ class Solution
                 temp = temp->next;
                 if(temp->next) q.push(temp->next);
             }
-
             return dummy->next;
         }
 };
