@@ -27,7 +27,27 @@ public:
             {
                 pair<int, int> center = rotten_list.front();
                 rotten_list.pop();
-                pair<int, int> right_point (center.first, center.second+1);
+                // Check up
+                if ((center.first - 1) >= 0 && grid[center.first - 1][center.second] == 1)
+                {
+                    
+                }
+                // Check right
+                if ((center.second + 1) <= grid[0].size() && grid[center.first][center.second+1] == 1)
+                {
+                }
+
+                // Check left
+                if ((center.second - 1) <= 0 && grid[center.first][center.second - 1] == 1)
+                {
+                }
+
+                //Check down
+                if ((center.first + 1) <= grid.size() && grid[center.first + 1][center.second] == 1)
+                {
+                }
+
+                    pair<int, int> right_point(center.first, center.second + 1);
                 pair<int, int> up_point (center.first-1, center.second);
                 pair<int, int> left_point (center.first, center)
                 pair<int, int> _point =
