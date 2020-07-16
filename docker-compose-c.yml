@@ -1,0 +1,9 @@
+version: '3.2'
+services:
+    gcc:
+      image: gcc
+      privileged: true
+      volumes:
+      - .:/src
+      working_dir:
+        /src

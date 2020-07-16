@@ -1,0 +1,9 @@
+version: '3.2'
+services:
+    python:
+      image: python
+      privileged: true
+      volumes:
+      - .:/src
+      working_dir:
+        /src
