@@ -3,11 +3,11 @@
 
 # Based on what tutorial said "Trying to pickle a highly recursive data structure may exceed the maximum recursion depth, 
 # a RecursionError will be raised in this case. You can carefully raise this limit with sys.setrecursionlimit()."
-# I checked the python recursion limit, it's 1000. So here I just increase the limit to 3000.
+# I checked the python recursion limit, it's 1000. So here I just increase the limit to 10000.
 
 
 import sys
-sys.setrecursionlimit(3000)
+sys.setrecursionlimit(10000)
 
 class LinkedListNode:
 	"""A simple implementation of a doubly-linked list"""
