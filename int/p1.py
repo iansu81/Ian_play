@@ -3,18 +3,25 @@ import argparse
 
 
 
-if __name__ == '__main__':
+def main():
+    # Parse the command line arument
     parser = argparse.ArgumentParser()
     parser.add_argument("path", help="display the directory:")
     args = parser.parse_args()
-    print(args.path)
+
     ans = []
     for file in os.listdir(args.path):
+        # Filter the file name
         if file.startswith("A"):
             if file.endswith(".gps"):
-            # print(file)
                 ans.append(file)
 
+    return(ans)
 
-# print(ans)
-return ans
+
+
+
+if __name__ == '__main__':
+    main()
+    
+   
