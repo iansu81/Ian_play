@@ -15,10 +15,13 @@ public:
     int partition(vector<int> &nums, int left, int right, int k)
     {
         int pivot = nums[right];
-        int i = left;
+        int i = left - 1;
         for(int j = left; j < (right - 1); j++)
         {
-            
+            if(nums[right] > nums[j]){
+                
+                i++;
+            }
 
         }
 
