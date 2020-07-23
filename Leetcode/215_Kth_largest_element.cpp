@@ -8,23 +8,27 @@ using namespace std;
 class Solution
 {
 public:
-    // int findKthLargest(vector<int> &nums, int k)
-    // {
-    //     int index = partition()
-    // }
+    int findKthLargest(vector<int> &nums, int k)
+    {
+        int index = partition(
+        if(in)
+        )
+    }
     int partition(vector<int> &nums, int left, int right, int k)
     {
         int pivot = nums[right];
-        int i = left - 1;
-        for(int j = left; j < (right - 1); j++)
+        int i = left;
+        cout << "AAAAA" << endl;
+        for(int j = left; j <= (right - 1); j++)
         {
-            if(nums[right] > nums[j])
+            if(pivot >= nums[j])
             {
                 swap(nums[i],nums[j]);    
                 i++;
             }
+
         }
-        swap(nums[i], pivot)
+        swap(nums[i], nums[right]);
         return i;
     }
 };
@@ -36,4 +40,5 @@ int main()
 
     Solution sol;
     // sol.findKthLargest(test, 2);
+    cout << "INDEX: " << sol.partition(test, 0, (test.size() - 1), 2);
 }
