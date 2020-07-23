@@ -18,13 +18,14 @@ public:
         int i = left - 1;
         for(int j = left; j < (right - 1); j++)
         {
-            if(nums[right] > nums[j]){
-                
+            if(nums[right] > nums[j])
+            {
+                swap(nums[i],nums[j]);    
                 i++;
             }
-
         }
-
+        swap(nums[i], pivot)
+        return i;
     }
 };
 
