@@ -4,15 +4,21 @@
 
 
 using namespace std;
-
+// 找第K大等於找第(元素-K+1)小的元素
 class Solution
 {
 public:
     int findKthLargest(vector<int> &nums, int k)
     {
-        int index = partition(
-        if(in)
-        )
+        int index = partition(nums, k, 0, nums.size() - 1, k)
+
+    }
+    int findKthSmallest(vector<int> &nums, int left, int right, int k)
+    {
+        int index = partition(nums, 0, nums.size()-1, k);
+        if(index = k){}
+        if(index > k){}
+        if(index < k){}
     }
     int partition(vector<int> &nums, int left, int right, int k)
     {
