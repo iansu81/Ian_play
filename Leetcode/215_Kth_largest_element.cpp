@@ -10,8 +10,9 @@ class Solution
 public:
     int findKthLargest(vector<int> &nums, int k)
     {
-        int index = findKthSmallest(nums, 0, nums.size() - 1, nums.size() +1 - k);
-        return nums[index-1];
+        int index = findKthSmallest(nums, 0, nums.size() - 1, nums.size() - k);
+    
+        return nums[index];
 
     }
     int findKthSmallest(vector<int> &nums, int left, int right, int k)
@@ -42,12 +43,13 @@ public:
 
 int main()
 {
-    vector<int> test { 3, 2, 1, 5, 6, 4 };
+    vector<int> test { 3,2,3,1,2,4,5,5,6 };
     // vector<int> test { 3, 2, 3, 1, 2, 4, 5, 5, 6 };
 
     Solution sol;
     // sol.findKthLargest(test, 2);
 //     cout << "INDEX: " << sol.partition(test, 0, (test.size() - 1), 2);
-    // cout << sol.findKthSmallest(test, 0, test.size()-1, 5); 
-    cout << sol.findKthLargest(test, 1);
+    // cout << sol.findKthSmallest(test, 0, test.size()-1, 6); 
+    cout << sol.findKthLargest(test, 4);
 }
+
