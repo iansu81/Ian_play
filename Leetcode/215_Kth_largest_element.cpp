@@ -8,23 +8,27 @@ using namespace std;
 class Solution
 {
 public:
-    int findKthLargest(vector<int> &nums, int k)
-    {
-        int index = partition(nums, k, 0, nums.size() - 1, k)
+    // int findKthLargest(vector<int> &nums, int k)
+    // {
+    //     int index = partition(nums, k, 0, nums.size() - 1, k)
 
-    }
+    // }
     int findKthSmallest(vector<int> &nums, int left, int right, int k)
     {
-        int index = partition(nums, 0, nums.size()-1, k);
-        if(index = k){}
-        if(index > k){}
-        if(index < k){}
+        // cout << "AAAAAAAAA" << endl;
+        int index = partition(nums, left, right, k);
+        // cout << "BBBBBBB" << endl;
+        cout << "Index: "<< index << endl;
+        if(index == (k - 1)) return nums[index] ;
+        // cout << "CCCCCCCCCCC" << endl;
+        if(index > (k - 1)) return findKthSmallest(nums, left, index - 1, k);
+        if(index < k) return findKthSmallest(nums, index+1, right, k);
     }
     int partition(vector<int> &nums, int left, int right, int k)
     {
         int pivot = nums[right];
         int i = left;
-        cout << "AAAAA" << endl;
+        // cout << "AAAAA" << endl;
         for(int j = left; j <= (right - 1); j++)
         {
             if(pivot >= nums[j])
@@ -46,5 +50,6 @@ int main()
 
     Solution sol;
     // sol.findKthLargest(test, 2);
-    cout << "INDEX: " << sol.partition(test, 0, (test.size() - 1), 2);
+//     cout << "INDEX: " << sol.partition(test, 0, (test.size() - 1), 2);
+    cout << sol.findKthSmallest(test, 0, test.size()-1, 5); 
 }
