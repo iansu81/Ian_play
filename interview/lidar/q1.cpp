@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <utility>
 
 using namespace std;
 
@@ -7,10 +8,14 @@ using namespace std;
 class Interval
 {
     private:
-        vector<vector<int>> current_intervals;
+        vector<pair<int, int>> current_intervals;
     public:
-        
-        void add( vector<int> &new_interval )
+        // constructor
+        Interval()
+        {
+            current_intervals = {};
+        }
+        void add( int start, int end )
         {
             /*  
                 If the current interval list is empty, just push the new interval
@@ -18,7 +23,7 @@ class Interval
             */
             if (current_intervals.size() == 0)
             {
-                current_intervals.push_back(new_interval);
+                current_intervals.push_back(make_pair(start, end));
                 return;
             }
 
@@ -27,41 +32,42 @@ class Interval
                 2. All intervals are sorted, insert the new into temp based 
                 on the starting time.
             */
-            vector<vector<int>> temp = current_intervals;
-            vector<vector<int>>::iterator it = temp.begin();
-            while (it != temp.end() && new_interval[0] > (*it)[0])
+            vector<pair<int, int>>::iterator it = current_intervals.begin();
+            while (it != current_intervals.end() && start > it->first)
             {
                 it++;
             }
-            temp.insert(it, new_interval);
-
-            // Clean the curent interval
-            current_intervals.clear();
+            current_intervals.insert(it, make_pair(start, end));
+            vector<pair<int, int>> temp {};
 
             /* 
                 Iterate through all the element in temp(sorted), and handle the overlapping interval here.
                 If element.start > last element.end => no overlap => push it into the vector. 
                 else => overlap => pick the maximum end time
             */
-            for (const auto &element : temp)
+            for (const auto &element : current_intervals)
             {
-                if (current_intervals.empty() || current_intervals.back()[1] < element[0])
+                if (temp.empty() || temp.back().second < element.first)
                 {
-                    current_intervals.push_back(element);
+                    temp.push_back(element);
                 }
                 else
                 {
-                    current_intervals.back()[1] = max(current_intervals.back()[1], element[1]);
+                    temp.back().second = max(temp.back().second, element.second);
                 }
             }
+            current_intervals = temp;
         }
-        void remove( vector<int> &remove_interval)
+        void remove( int start, int end)
         {
-            vector<vector<int>> ans;
+            vector<pair<int, int>> ans;
             for (const auto &interval : current_intervals)
                 // Handle non-overlapping intervals
-                if (interval[1] <= remove_interval[0] || interval[0] >= remove_interval[1])
+                if (interval.second <= start || interval.first >= end)
+                {
                     ans.push_back(interval);
+                }
+                    
                 /*
                     Handle overlapping conditions
                     [3, 6] remove [4,5] => [3,4], [5,6]
@@ -73,14 +79,14 @@ class Interval
                         If interval.end > remove_interval.end:
                             keep [remove_interval.end, interval_end]
                     */
-                    if (interval[0] < remove_interval[0])
-                        ans.push_back({interval[0], remove_interval[0]});
-                    if (interval[1] > remove_interval[1])
-                        ans.push_back({remove_interval[1], interval[1]});
+                    if (interval.first < start)
+                        ans.push_back(make_pair(interval.first, start));
+                    if (interval.second > end)
+                        ans.push_back(make_pair(end, interval.second));
                 }
             current_intervals = ans;
         }
-        vector<vector<int>> get_ans()
+        vector<pair<int,int>> get_ans()
         {
             return current_intervals;
         } 
@@ -95,21 +101,17 @@ int main(){
     vector<int> test5{2,7};
 
     Interval interval;
-    interval.add(test1);
-    interval.remove(test2);
-    interval.add(test3);
-    interval.remove(test4);
-    interval.add(test5);
+    interval.add(1,5);
+    interval.remove(2,3);
+    interval.add(6,8);
+    interval.remove(4,7);
+    interval.add(2,7);
 
-    
-    vector<vector<int>> resutl = interval.get_ans();
-    for (int i = 0; i < resutl.size(); i++)
+    vector<pair<int, int>> result = interval.get_ans();
+    for (int i = 0; i < result.size(); i++)
     {
-        for (int j = 0; j < resutl[i].size(); j++)
-        {
-            cout << resutl[i][j] << ',';
-        }
+
+        cout << result[i].first << ',' << result[i].second;
         cout << endl;
     }
-
 }
