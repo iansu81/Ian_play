@@ -12,13 +12,22 @@ class Solution
         
         void add( vector<int> &new_interval )
         {
-            vector<vector<int>> temp = current_intervals;
+            /*  
+                If the current interval list is empty, just push the new interval
+                into it and return
+            */
             if (current_intervals.size() == 0)
             {
                 current_intervals.push_back(new_interval);
                 return;
             }
 
+            /*
+                1. Copy the current interval to a temp vector
+                2. All intervals are sorted, insert the new into temp based 
+                on the starting time.
+            */
+            vector<vector<int>> temp = current_intervals;
             vector<vector<int>>::iterator it = temp.begin();
             while (it != temp.end() && new_interval[0] > (*it)[0])
             {
@@ -26,7 +35,14 @@ class Solution
             }
             temp.insert(it, new_interval);
 
+            // Clean the curent interval
             current_intervals.clear();
+
+            /* 
+                Iterate through all the element in temp(sorted), and handle the overlapping interval here.
+                If element.start > last element.end => no overlap => push it into the vector. 
+                else => overlap => pick the maximum end time
+            */
             for (const auto &element : temp)
             {
                 if (current_intervals.empty() || current_intervals.back()[1] < element[0])
@@ -39,21 +55,35 @@ class Solution
                 }
             }
         }
-        void remove( vector<int> &old_interval)
+        void remove( vector<int> &remove_interval)
         {
             vector<vector<int>> ans;
             for (const auto &interval : current_intervals)
-                if (interval[1] <= old_interval[0] || interval[0] >= old_interval[1])
+                // Handle non-overlapping intervals
+                if (interval[1] <= remove_interval[0] || interval[0] >= remove_interval[1])
                     ans.push_back(interval);
+                /*
+                    Handle overlapping conditions
+                    [3, 6] remove [4,5] => [3,4], [5,6]
+                */
                 else
                 {
-                    if (interval[0] < old_interval[0])
-                        ans.push_back({interval[0], old_interval[0]});
-                    if (interval[1] > old_interval[1])
-                        ans.push_back({old_interval[1], interval[1]});
+                    /*  If interval.start < remove_interval.start:
+                            keep [interval.start, remove_interval.start
+                        If interval.end > remove_interval.end:
+                            keep [remove_interval.end, interval_end]
+                    */
+                    if (interval[0] < remove_interval[0])
+                        ans.push_back({interval[0], remove_interval[0]});
+                    if (interval[1] > remove_interval[1])
+                        ans.push_back({remove_interval[1], interval[1]});
                 }
             current_intervals = ans;
         }
+        vector<vector<int>> get_ans()
+        {
+            return current_intervals;
+        } 
 };
 
 
@@ -63,27 +93,23 @@ int main(){
     vector<int> test3{6,8};
     vector<int> test4{4,7};
     vector<int> test5{2,7};
+
     Solution sol;
     sol.add(test1);
-
     sol.remove(test2);
     sol.add(test3);
-
     sol.remove(test4);
-
     sol.add(test5);
-    for (int i = 0; i < sol.current_intervals.size(); i++)
+
+    
+    vector<vector<int>> resutl = sol.get_ans();
+    for (int i = 0; i < resutl.size(); i++)
     {
-        for (int j = 0; j < sol.current_intervals[i].size(); j++)
+        for (int j = 0; j < resutl[i].size(); j++)
         {
-            cout << sol.current_intervals[i][j] << ',';
+            cout << resutl[i][j] << ',';
         }
         cout << endl;
     }
-    // for(int i = 0; i < sol.current_intervals.size(); i++){
-    //     for(int j = 0; j < sol.current_intervals[i].size(); j++){
-    //         cout << sol.current_intervals[i][j] << ',';
-    //     }
-    //     cout << endl;
-    // }
+
 }
