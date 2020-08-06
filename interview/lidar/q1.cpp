@@ -4,7 +4,7 @@
 using namespace std;
 
 
-class Solution
+class Interval
 {
     private:
         vector<vector<int>> current_intervals;
@@ -94,15 +94,15 @@ int main(){
     vector<int> test4{4,7};
     vector<int> test5{2,7};
 
-    Solution sol;
-    sol.add(test1);
-    sol.remove(test2);
-    sol.add(test3);
-    sol.remove(test4);
-    sol.add(test5);
+    Interval interval;
+    interval.add(test1);
+    interval.remove(test2);
+    interval.add(test3);
+    interval.remove(test4);
+    interval.add(test5);
 
     
-    vector<vector<int>> resutl = sol.get_ans();
+    vector<vector<int>> resutl = interval.get_ans();
     for (int i = 0; i < resutl.size(); i++)
     {
         for (int j = 0; j < resutl[i].size(); j++)
