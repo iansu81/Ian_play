@@ -15,10 +15,8 @@ public:
         for(const auto& c: s)
         {
             if(c == '('){
-                if(open == close)
-
+                if(open == close) continue;
                 open++
-
             }
             else if(c == ')')
             {
