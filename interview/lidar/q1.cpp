@@ -28,9 +28,7 @@ class Interval
             }
 
             /*
-                1. Copy the current interval to a temp vector
-                2. All intervals are sorted, insert the new into temp based 
-                on the starting time.
+                1. Insert the new interval to the current interval 
             */
             vector<pair<int, int>>::iterator it = current_intervals.begin();
             while (it != current_intervals.end() && start > it->first)
@@ -41,7 +39,7 @@ class Interval
             vector<pair<int, int>> temp {};
 
             /* 
-                Iterate through all the element in temp(sorted), and handle the overlapping interval here.
+                Iterate through all the element in current interval(sorted), and handle the overlapping interval here.
                 If element.start > last element.end => no overlap => push it into the vector. 
                 else => overlap => pick the maximum end time
             */
@@ -94,11 +92,6 @@ class Interval
 
 
 int main(){
-    vector<int> test1{1,5};
-    vector<int> test2{2,3};
-    vector<int> test3{6,8};
-    vector<int> test4{4,7};
-    vector<int> test5{2,7};
 
     Interval interval;
     interval.add(1,5);
