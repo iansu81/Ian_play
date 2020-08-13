@@ -59,7 +59,7 @@ public:
         
     }
 private:
-    // 第一個是key, 第二個是pointer用來訪問list 中結點
+    // 第一個是key, 第二個是pointer用來訪問list 中的結點
     unordered_map<int, list<pair<int, int>>::iterator> LRU_map;
     int _capacity = 0;
     // 第一個是key, 第二個是value
