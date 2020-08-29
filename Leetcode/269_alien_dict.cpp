@@ -28,9 +28,21 @@ public:
             string w1 = words[i];
             string w2 = words[i+1];
             int len = min(w1.size(), w2.size());
-            for(int i = 0 )
-
+            for(int j = 0 ; j < len; j++ )
+            {
+                //w2[j] 應該要 > w1[j] 
+                if(w1[j] != w2[j])
+                {
+                    if(graph[w1[j]].count(w2[j])) return "";
+                    graph[w2[j]].insert(w1[j]);
+                    break;
+                }
+                if( j == min( w1.size(), w2.size()) && w1.size() > w2.size() ) return "";
+            }
         }
+
+        
+
 
         
     }
