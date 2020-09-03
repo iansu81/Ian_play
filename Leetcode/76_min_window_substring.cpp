@@ -29,10 +29,15 @@ public:
         int minlen = INT_MAX;
         while(right < s.size())
         {
-            // 當每次移動right index的時候, 就把那個char在map裡面的數字-1, 負的代表有多的, 
+            // 當每次移動right index的時候, 就把那個char在map裡面的數字-1, 負的代表有多的, 正的代表還要繼續往右找
+            // 每次找到一個元素減完之後>= 0, 代表我們又多找到一個target string裡面的char 
             if(--target_map[s[right]] >= 0) count++;
+
+            // 當我們找到所有的元素, 當右邊的index - 左邊index < minLen, 就update一下ans,
+            // 然後接下來開始移動左邊的index, +1 之後如果大於0, 代表移除左邊之後, 就不是所有target string 裡面的char都被找到了, 所以必須count--
             while( count == target_len )
             {
+                // +1是因為 比如說0,1,2三個字母都要, 2-0+1才是拿3個元素
                 if(minlen > (right - left + 1))
                 {
                     minlen = (right - left + 1);
