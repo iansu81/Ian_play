@@ -10,19 +10,26 @@ public:
     vector<vector<int>> permute(vector<int> &nums)
     {
         vector<vector<int>> result;
-        helper(3,nums,result);
+        vector<int> record;
+        helper(nums, result, 0);
+        return result;
 
     }
-    void helper(int level, vector<int> current, vector<int> &record, vector<vector<int>> &result)
+    // Start 其實就是固定前start個位置, 然後開始換後面的數字, key point: 換完之後要讓他 recover 成原本的樣子, 好坐下一次置換
+    // ex: [1,2,3] swap(nums[0],nums[0]) ＝> 固定1 => [1,2,3], [1,3,2]
+    void helper( vector<int> nums, vector<vector<int>>& result, int start)
     {
-        if(level == 0)
+        if(start >= nums.size())
         {
-            result.push_back(record);
+            result.push_back(nums);
             return;
         }
-        record.push_back(current[level];
-        helper(level-1, current,record, result);
-
+        for(int i = start; i < nums.size(); i++)
+        {
+            swap(nums[start], nums[i]);
+            helper(nums, result, start+1);
+            swap(nums[i], nums[start]);
+        }
     }
 
 };
@@ -30,6 +37,18 @@ public:
 
 int main()
 {
+    vector<int> test_case{1,2,3};
+    Solution sol;
+    vector<vector<int>> result = sol.permute(test_case);
+    for(int i = 0 ; i < result.size(); i++)
+    {
+        for(int j = 0 ; j < result[i].size(); j++)
+        {
+            cout << result[i][j] << ',';
+        }
+        cout << endl;
+    }
+
 
 
 }
