@@ -11,6 +11,12 @@ int calculateCopies(string string1, string string2) {
     int ans = 1;
     for(int i = 0 ; i < string2.size(); i++)
     {
+        if(j >= string1.length() )
+        {
+            cout << "ans : " << ans << endl;
+            ++ans;
+            j = 0;
+        }
         while(string2[i] != string1[j])
         {
             cout << "I: " << i << endl;
@@ -27,12 +33,7 @@ int calculateCopies(string string1, string string2) {
             }
         }
         ++j;
-        if(j >= string1.length() )
-            {
-                cout << "ans : " << ans << endl;
-                ++ans;
-                j = 0;
-            }
+
 
     }
     return ans;
