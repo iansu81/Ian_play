@@ -10,7 +10,7 @@ using namespace std;
 
 // 建立一個vector prefix sum把到目前index的所有數字加起來
 // 最後一個數字就是所有的weight 之和, 然後generate 一個數字去mod這個weight和
-這樣就會產生一個數字是在0~(sum of wight-1), 接下來利用upper_bound去找比這個數字大的第一個index, 即為答案
+// 這樣就會產生一個數字是在0~(sum of wight-1), 接下來利用upper_bound去找比這個數字大的第一個index, 即為答案
 class Solution {
 public:
     Solution(vector<int>& w) {
