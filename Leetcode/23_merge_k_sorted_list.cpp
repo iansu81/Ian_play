@@ -31,7 +31,7 @@ class Solution
             priority_queue<ListNode*, vector<ListNode*>, decltype(comp)>
                 q (comp);
 
-            //把各個vector中最大的先push 進去priority_queue
+            //把各個vector中最小的先push 進去priority_queue
             //注意這裡可以能會有[[]]的情形,所以在push進去之前,必須要先確定她是不是nullptr
             for(int i = 0; i< lists.size(); ++i)
             {

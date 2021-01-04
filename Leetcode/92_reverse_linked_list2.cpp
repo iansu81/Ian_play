@@ -14,9 +14,11 @@ public:
     ListNode* reverseBetween(ListNode* head, int m, int n) {
         ListNode dummy(0);
         dummy.next = head;
+
+        // 要開始移動的m node前一個node
         ListNode* nodeBehind = &dummy;
         
-        // 把nodeBehind 移到m node前一個
+        // 把紀錄用的nodeBehind 移到m node前一個
         for(int i = 0; i < m - 1; i++ )
         {
             nodeBehind = nodeBehind-> next;
@@ -25,7 +27,7 @@ public:
         ListNode* curNode = nodeBehind->next;
         // 紀錄m前一個node（之後要接到n node）
         ListNode* preHead = nodeBehind;
-        // 紀錄mnode（之後要接到n node 下一個）
+        // 紀錄m node（之後要接到n node 下一個）
         ListNode* tail = curNode;
         
         // 開始reverse node 

@@ -49,5 +49,6 @@ int main() {
     string test4 = "(a(b(c)d)";
 
     Solution sol;
-    sol.minRemoveToMakeValid(test1);
+    cout << "Ans: " << sol.minRemoveToMakeValid(test1) << endl;
+    
 }

@@ -29,6 +29,8 @@ public:
     {
         // 如果之前已經找過這個s, 就用紀錄的值就好了
         if(record.count(s)) return record[s];
+
+
         vector<string> ans;
         // 就算在dict裡面找到s, 也不能直接return, 因為s裡面的子串可能也在dict裡面
         if(dict.count(s))
@@ -42,11 +44,16 @@ public:
             if(!dict.count(right)) continue;
 
             string left = s.substr(0,i);
+
+            // 接下來找左邊的子串
             vector<string> left_ans = helper(left, dict);
             append_helper(left_ans, right);
+
+            // 這邊不能用push back原因是ans 這個vector<string>裡面是包含了所有s的解, 
+            // left_ans只包含了在這個right string之下的所有解, ans是所有right string 的解
             ans.insert(ans.end(), left_ans.begin(), left_ans.end());
         }
-        record[s].swap(ans);
+        record[s] = ans;
         return record[s];
 
     }

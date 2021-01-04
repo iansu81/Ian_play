@@ -24,6 +24,7 @@ public:
         for(int i = 1; i < intervals.size() ; i++)
         {
             // 當新的meeting 時間比min heap裡面最早結束的時間還要小的時候, 代表必須再開一間會議室, 此時就把新的meeting結束時間push 進去做紀錄
+            // 如果新的meeting 時間比最早結束的時間還要晚, 就不用重新開一間, 把舊的meeting時間紀錄pop出來, 再push新的時間進去
             if(intervals[i][0] >= occupied_room.top()){
 
                 occupied_room.pop();
