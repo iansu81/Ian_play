@@ -4,6 +4,13 @@
         "ostream": "cpp",
         "vector": "cpp",
         "deque": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "chrono": "cpp",
+        "random": "cpp",
+        "limits": "cpp",
+        "valarray": "cpp",
+        "bitset": "cpp",
+        "algorithm": "cpp"
     }
 }
