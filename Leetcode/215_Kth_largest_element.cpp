@@ -4,7 +4,7 @@
 #include <algorithm>
 
 using namespace std;
-// 解法1: quick select
+// 解法1:   select
 class Solution
 {
 public:
