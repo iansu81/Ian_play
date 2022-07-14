@@ -33,3 +33,29 @@ public:
         return isValid(root->left, low, root->val) && isValid(root->right, root->val, high);
     }
 };
+
+
+
+
+// 寫法2
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+
+        stack<TreeNode*> record;
+        TreeNode* tmp = root;
+        TreeNode* prev = nullptr;
+        while(!record.empty() || tmp != nullptr ) {
+            while( tmp != nullptr ) {
+                record.push(tmp);
+                tmp = tmp->left;
+            }
+            tmp = record.top();
+            record.pop();
+            if( prev != nullptr && prev->val > tmp->val) return false;
+            prev = tmp;
+            tmp = tmp->right;
+        }
+        return true;
+    }
+};
