@@ -11,11 +11,12 @@ using namespace std;
 // 作法：
 
 // 1. 建立一個單調遞增的stack, 用來記錄index, 並且先push 一個-1進去, ex : 當height[i] <= height[stack top] = > 就必須要把stack中的元素拿出來操作 
-// 2. pop出來時候的公式 height[stack[top]] * (i−stack[top−1]−1)
+// 2. pop出來時候的公式 height[stack[top]] * (i−stack[top−1]−1) 
 //     ex: [2,3,1] index: 0,1,2
 //     把2,3 也就是 index = 0 ,index = 1都push到stack中之後, 當i跑到index = 2的時候 height[stack[top]] = height[1] = 3
 //     => 3 * (i = 2 - stack[0](index:0) - 1 ) = 3
 //     接下來因為2 > 1 所以也要再做一次
+//  i−stack[top−1]−1 這邊是因為i 已經走到最高的下一個了, 這邊應該是(i-1)-stack[top-1], 看前面最高的可以往前幾個 
 
 // 3. 每次pop之後跟最大的max_area比並且記錄下來
 
