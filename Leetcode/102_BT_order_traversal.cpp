@@ -15,8 +15,8 @@ public:
         vector<vector<int>> result;
         TreeNode* tmp = root;
         if(tmp == nullptr) return result;
-        queue<pair<int, TreeNode*>> q;
-        q.push(make_pair(0,tmp));
+        queue< TreeNode*> q;
+        q.push(tmp);
 
         // 每一個while iteration 會去遍歷一整層的node
         while(!q.empty()) {
@@ -26,9 +26,9 @@ public:
             for(int i = 0; i < n_node;i++) {
                 auto n = q.front();
                 q.pop();
-                row_data[i] = n.second->val;
-                if(n.second->left != nullptr) q.push(make_pair(n.first+1, n.second->left));
-                if(n.second->right != nullptr) q.push(make_pair(n.first+1, n.second->right));
+                row_data[i] = n->val;
+                if(n->left != nullptr) q.push(n->left);
+                if(n->right != nullptr) q.push(n->right);
 
             }
             result.push_back(row_data);
