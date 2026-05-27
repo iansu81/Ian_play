@@ -1,0 +1,74 @@
+
+class WiperMotor {
+    public:
+        enum class Direction { kLeft, kRight };
+    
+        // After call, wiper will move in `direction` until `Stop()`
+        void MoveTo(Direction direction);
+    
+        void Stop();
+    
+        // Returns 0-100 degrees. The left-most position is 0, 
+        // right-most position is 100 degrees.
+        float GetPosition() const;
+    };
+    
+    class ProximitySensor {
+    public:
+        // True if wiper is near sensor, false otherwise.
+        bool WiperDetected() const;
+    };
+    
+    WiperMotor motor;
+    ProximitySensor left_sensor;
+    ProximitySensor right_sensor;
+    
+
+
+class WiperController {
+public:
+    enum class State { IDLE, MOVING_LEFT, MOVING_RIGHT, CENTERING };
+
+    WiperController() : state(State::IDLE), middlePosition(0.0f) {}
+
+    void poll() {
+        switch (state) {
+            case State::IDLE:
+                // Start moving to the left first
+                motor.MoveTo(WiperMotor::Direction::kLeft);
+                state = State::MOVING_LEFT;
+                break;
+
+            case State::MOVING_LEFT:
+                if (left_sensor.WiperDetected()) {
+                    leftPosition = motor.GetPosition(); // Record left-most position
+                    motor.MoveTo(WiperMotor::Direction::kRight);
+                    state = State::MOVING_RIGHT;
+                }
+                break;
+
+            case State::MOVING_RIGHT:
+                if (right_sensor.WiperDetected()) {
+                    rightPosition = motor.GetPosition(); // Record right-most position
+                    middlePosition = (leftPosition + rightPosition) / 2.0f;
+                    motor.MoveTo(WiperMotor::Direction::kLeft);
+                    state = State::CENTERING;
+                }
+                break;
+
+            case State::CENTERING:
+                if (motor.GetPosition() >= middlePosition - 0.1f && motor.GetPosition() <= middlePosition + 0.1f) {
+                    motor.Stop();
+                    state = State::IDLE; // Return to idle state
+                }
+                break;
+        }
+    }
+
+private:
+    WiperMotor motor;
+    ProximitySensor left_sensor;
+    ProximitySensor right_sensor;
+    State state;
+    float leftPosition, rightPosition, middlePosition;
+};

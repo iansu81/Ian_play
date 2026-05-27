@@ -1,0 +1,75 @@
+Amazon面試題：加權隨機抽獎系統
+Amazon面試題：加權隨機抽獎系統
+
+題目敘述：
+設計一個抽獎系統，從 N 個參與者中隨機抽出 K 個不重複的贏家。每個使用者可以投注多次，投注金額越高，中獎機率按比例上升。例如：User 1 投 1 元，User 2 投 9 元，User 2 的中獎機率必須是 User 1 的 9 倍。
+
+核心演算法：
+使用 A-Res (Weighted Reservoir Sampling) 演算法。
+
+  - 時間複雜度：O(N log K)
+  - 空間複雜度：O(K)
+  - 核心邏輯：替每位參與者計算權重隨機分數 S = R^(1/W)（R 為 0~1 均勻隨機數，W 為總權重金額），並利用 Min-Heap 動態維護分數最高的前 K 位贏家。
+
+C++ 範例程式碼 (使用 struct)：
+
+#include 
+#include 
+#include 
+#include 
+#include 
+#include 
+#include 
+
+struct Participant {
+std::string user_id;
+double weight;
+};
+
+struct Candidate {
+std::string user_id;
+double score;
+
+bool operator>(const Candidate& other) const {
+    return score > other.score;
+}
+
+};
+
+class LotterySystem {
+public:
+static std::vectorstd::string drawWinners(const std::vector& participants, int k) {
+std::vectorstd::string winners;
+if (participants.empty() || k <= 0) return winners;
+if (k >= participants.size()) {
+for (const auto& p : participants) winners.push_back(p.user_id);
+return winners;
+}
+
+    std::priority_queue<Candidate, std::vector<Candidate>, std::greater<Candidate>> min_heap;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dis(0.0, 1.0);
+
+    for (const auto& p : participants) {
+        if (p.weight <= 0) continue;
+        double r = dis(gen);
+        double score = std::pow(r, 1.0 / p.weight);
+
+        if (min_heap.size() < k) {
+            min_heap.push({p.user_id, score});
+        } else if (score > min_heap.top().score) {
+            min_heap.pop();
+            min_heap.push({p.user_id, score});
+        }
+    }
+
+    while (!min_heap.empty()) {
+        winners.push_back(min_heap.top().user_id);
+        min_heap.pop();
+    }
+    std::reverse(winners.begin(), winners.end());
+    return winners;
+}
+
+};

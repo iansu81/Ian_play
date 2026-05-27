@@ -1,0 +1,121 @@
+題目:
+courses = [ {"foo": ["baz", "bar"]}, {"bar": ["baz"]}, {"baz": []} ] key: 課程 , value: 先修課
+
+Step 1：把資料轉成 graph
+
+graph：
+baz -> bar
+baz -> foo
+bar -> foo
+
+
+Step 2：計算 indegree
+node	indegree
+baz	        0
+bar	        1
+foo	        2
+
+
+Step 3：Topological Sort (Kahn BFS)
+
+把 indegree = 0 的 node 放進 queue
+pop 出來加入結果
+把它指向的 node indegree -1
+若變 0 再加入 queue
+
+====================================Python=======================================
+from collections import defaultdict, deque
+
+courses = [
+    {"foo": ["baz", "bar"]},
+    {"bar": ["baz"]},
+    {"baz": []},
+]
+
+graph = defaultdict(list)
+indegree = defaultdict(int)
+
+# build graph
+for item in courses:
+    for course, prereqs in item.items():
+        if course not in indegree:
+            indegree[course] = 0
+
+        for pre in prereqs:
+            graph[pre].append(course)
+            indegree[course] += 1
+
+# queue for indegree 0
+queue = deque()
+
+for node in indegree:
+    if indegree[node] == 0:
+        queue.append(node)
+
+result = []
+
+while queue:
+    node = queue.popleft()
+    result.append(node)
+
+    for nei in graph[node]:
+        indegree[nei] -= 1
+        if indegree[nei] == 0:
+            queue.append(nei)
+
+// 如果圖裡存在 cycle，就會發生一件事：
+// cycle 裡面的 node 永遠不可能 indegree = 0
+// 所以它們 永遠進不了 queue。
+// 因此：
+// 最後 result 裡的 node 數量
+// < 總 node 數量 V
+if len(result) != len(indegree):
+    return "cycle detected"
+
+print(result)
+
+
+=============================C++===========================================
+
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+#include <queue>
+using namespace std;
+
+int main() {
+    unordered_map<string, vector<string>> graph;
+    unordered_map<string, int> indegree;
+
+    graph["baz"] = {"foo", "bar"};
+    graph["bar"] = {"foo"};
+
+    indegree["foo"] = 2;
+    indegree["bar"] = 1;
+    indegree["baz"] = 0;
+
+    queue<string> q;
+
+    for (auto &[node, deg] : indegree) {
+        if (deg == 0)
+            q.push(node);
+    }
+
+    vector<string> result;
+
+    while (!q.empty()) {
+        string node = q.front();
+        q.pop();
+
+        result.push_back(node);
+
+        for (auto &next : graph[node]) {
+            indegree[next]--;
+            if (indegree[next] == 0)
+                q.push(next);
+        }
+    }
+
+    for (auto &c : result)
+        cout << c << " ";
+}
